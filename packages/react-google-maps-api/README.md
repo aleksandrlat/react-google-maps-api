@@ -164,3 +164,61 @@ Since version 1.2.2 We added useGoogleMap hook, which is working only with React
 [nycmesh.net](https://nycmesh.net) Network topography visualized on the map [(Github)](https://github.com/meshcenter/network-map)
 
 add your website by making PR!
+
+## AdvancedMarker Usage
+
+The `AdvancedMarker` component is used to create markers using the `google.maps.marker.AdvancedMarkerElement` class. This component provides all the features of the `AdvancedMarkerElement`.
+
+### Example
+
+```jsx
+import React from 'react';
+import { GoogleMap, useJsApiLoader, AdvancedMarker } from '@react-google-maps/api';
+
+const containerStyle = {
+  width: '400px',
+  height: '400px'
+};
+
+const center = {
+  lat: -3.745,
+  lng: -38.523
+};
+
+function MyComponent() {
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: "YOUR_API_KEY"
+  })
+
+  const [map, setMap] = React.useState(null)
+
+  const onLoad = React.useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+
+    setMap(map)
+  }, [])
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null)
+  }, [])
+
+  return isLoaded ? (
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      >
+        <AdvancedMarker
+          position={center}
+          options={{ title: 'Advanced Marker' }}
+        />
+      </GoogleMap>
+  ) : <></>
+}
+
+export default React.memo(MyComponent);
+```
