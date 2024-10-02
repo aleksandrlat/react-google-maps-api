@@ -42,6 +42,12 @@ export {
 } from './components/drawing/Marker'
 
 export {
+  default as AdvancedMarker,
+  AdvancedMarkerF,
+  type AdvancedMarkerProps,
+} from './components/drawing/AdvancedMarker'
+
+export {
   default as MarkerClusterer,
   MarkerClustererF,
   type MarkerClustererProps,
